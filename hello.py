@@ -6,7 +6,7 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash 
-
+from datetime import date
 
 # Create a Flask Instance
 app = Flask(__name__)
@@ -23,6 +23,16 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 
+# Json Thing
+@app.route('/date')
+def get_current_date():
+	favorite_pizza = {
+		"John": "Pepperoni",
+		"Mary": "Cheese",
+		"Tim": "Mushroom"
+	}
+	return favorite_pizza
+	#return {"Date": date.today()}
 
 
 

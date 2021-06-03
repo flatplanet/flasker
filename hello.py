@@ -40,6 +40,12 @@ class PostForm(FlaskForm):
 	slug = StringField("Slug", validators=[DataRequired()])
 	submit = SubmitField("Submit")
 
+@app.route('/posts')
+def posts():
+	# Grab all the posts from the database
+	posts = Posts.query.order_by(Posts.date_posted)
+	return render_template("posts.html", posts=posts)
+
 # Add Post Page
 @app.route('/add-post', methods=['GET', 'POST'])
 def add_post():

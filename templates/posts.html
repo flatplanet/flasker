@@ -12,11 +12,19 @@
 <br/>
 {% for post in posts %}
 <div class="shadow p-3 mb-5 bg-body rounded">
-	<h2>{{ post.title }}</h2>
+	<h2><a href="{{ url_for('post', id=post.id)}}">{{ post.title }}</a></h2>
 	<small>By: {{ post.author }}<br/>
 	{{ post.date_posted }}</small> <br/><br/>
 
-	{{ post.content }}<br/><br/>
+	{{ post.content }}
+	<br/><br/>
+	<a href="{{ url_for('post', id=post.id)}}" class="btn btn-outline-secondary btn-sm">View Post</a>
+
+	<a href="{{ url_for('edit_post', id=post.id)}}" class="btn btn-outline-secondary btn-sm">Edit Post</a>
+
+	<a href="{{ url_for('delete_post', id=post.id)}}" class="btn btn-outline-danger btn-sm">Delete Post</a>
+
+	<br/><br/>
 </div>
 <br/>
 {% endfor %}

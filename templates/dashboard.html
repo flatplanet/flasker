@@ -14,12 +14,95 @@
 
 
 
-	<h1>Dashboard</h1>
-	<br/><br/>
-	<p>You Are Logged In!</p>
+	<h2>Dashboard</h2>
+	<br/>
 
-	<a href="{{ url_for('logout')}}">Logout</a>
+	<div class="card">
+  <div class="card-header">
+    {{ current_user.name }}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Welcome To Your User Dashboard...</h5>
+    <p class="card-text">
+    	<strong>Name:</strong>
+	{{ current_user.name }}<br/>
 
+	<strong>Username:</strong>
+	{{ current_user.username }}<br/>
+
+	<strong>User Id:</strong>
+	{{ current_user.id }}<br/>
+
+	<strong>Email:</strong>
+	{{ current_user.email }}<br/>
+
+	<strong>Favorite Color:</strong>
+	{{ current_user.favorite_color }}<br/>
+
+	<strong>Date Joined:</strong>
+	{{ current_user.date_added }}<br/>
+	
+
+    	
+    </p>
+    <a href="{{ url_for('logout')}}" class="btn btn-secondary btn-sm">Logout</a>
+
+    <a href="{{ url_for('update', id=current_user.id)}}" class="btn btn-secondary btn-sm">Update Profile</a>
+
+    <a href="{{ url_for('delete', id=current_user.id)}}" class="btn btn-danger btn-sm">Delete</a>
+
+
+  </div>
+</div>
+	
+
+	
+<br/>
+
+<div class="card">
+  <div class="card-header">
+    Update Profile
+  </div>
+  <div class="card-body">
+
+  	<form action="/dashboard" method="POST">
+		{{ form.hidden_tag() }}
+
+		{{ form.name.label(class="form-label") }}
+
+		{{ form.name(class="form-control", value=name_to_update.name) }}
+		<br/>
+
+		{{ form.username.label(class="form-label") }}
+
+		{{ form.username(class="form-control", value=name_to_update.username) }}
+		<br/>
+
+		{{ form.email.label(class="form-label") }}
+
+		{{ form.email(class="form-control", value=name_to_update.email) }}
+		<br/>
+		
+		{{ form.favorite_color.label(class="form-label") }}
+
+		{{ form.favorite_color(class="form-control", value=name_to_update.favorite_color) }}
+
+
+
+		<br/>
+		
+		{{ form.submit(class="btn btn-secondary btn-sm") }}
+
+		
+
+
+	</form>
+
+
+
+</div>
+
+	
 	
 
 

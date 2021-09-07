@@ -72,6 +72,31 @@ def logout():
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
+	form = UserForm()
+	id = current_user.id
+	name_to_update = Users.query.get_or_404(id)
+	if request.method == "POST":
+		name_to_update.name = request.form['name']
+		name_to_update.email = request.form['email']
+		name_to_update.favorite_color = request.form['favorite_color']
+		name_to_update.username = request.form['username']
+		try:
+			db.session.commit()
+			flash("User Updated Successfully!")
+			return render_template("dashboard.html", 
+				form=form,
+				name_to_update = name_to_update)
+		except:
+			flash("Error!  Looks like there was a problem...try again!")
+			return render_template("dashboard.html", 
+				form=form,
+				name_to_update = name_to_update)
+	else:
+		return render_template("dashboard.html", 
+				form=form,
+				name_to_update = name_to_update,
+				id = id)
+
 	return render_template('dashboard.html')
 
 
@@ -130,6 +155,7 @@ def post(id):
 	return render_template('post.html', post=post)
 
 @app.route('/posts/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit_post(id):
 	post = Posts.query.get_or_404(id)
 	form = PostForm()
@@ -152,6 +178,7 @@ def edit_post(id):
 
 # Add Post Page
 @app.route('/add-post', methods=['GET', 'POST'])
+#@login_required
 def add_post():
 	form = PostForm()
 
@@ -256,17 +283,19 @@ def update(id):
 		name_to_update.name = request.form['name']
 		name_to_update.email = request.form['email']
 		name_to_update.favorite_color = request.form['favorite_color']
+		name_to_update.username = request.form['username']
 		try:
 			db.session.commit()
 			flash("User Updated Successfully!")
 			return render_template("update.html", 
 				form=form,
-				name_to_update = name_to_update)
+				name_to_update = name_to_update, id=id)
 		except:
 			flash("Error!  Looks like there was a problem...try again!")
 			return render_template("update.html", 
 				form=form,
-				name_to_update = name_to_update)
+				name_to_update = name_to_update,
+				id=id)
 	else:
 		return render_template("update.html", 
 				form=form,

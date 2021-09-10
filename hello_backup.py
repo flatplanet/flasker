@@ -1,12 +1,14 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, ValidationError
+from wtforms.validators import DataRequired, EqualTo, Length
 from datetime import datetime 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash 
 from datetime import date
-from webforms import LoginForm, PostForm, UserForm, PasswordForm, NamerForm
+from wtforms.widgets import TextArea
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-
 
 # Create a Flask Instance
 app = Flask(__name__)
@@ -31,8 +33,12 @@ login_manager.login_view = 'login'
 def load_user(user_id):
 	return Users.query.get(int(user_id))
 
-
-
+# Create Login Form
+class LoginForm(FlaskForm):
+	username = StringField("Username", validators=[DataRequired()])
+	password = PasswordField("Password", validators=[DataRequired()])
+	submit = SubmitField("Submit")
+	
 
 # Create Login Page
 @app.route('/login', methods=['GET', 'POST'])
@@ -104,7 +110,13 @@ class Posts(db.Model):
 	date_posted = db.Column(db.DateTime, default=datetime.utcnow)
 	slug = db.Column(db.String(255))
 
-
+# Create a Posts Form
+class PostForm(FlaskForm):
+	title = StringField("Title", validators=[DataRequired()])
+	content = StringField("Content", validators=[DataRequired()], widget=TextArea())
+	author = StringField("Author", validators=[DataRequired()])
+	slug = StringField("Slug", validators=[DataRequired()])
+	submit = SubmitField("Submit")
 
 @app.route('/posts/delete/<int:id>')
 def delete_post(id):
@@ -252,7 +264,15 @@ def delete(id):
 		return render_template("add_user.html", 
 		form=form, name=name,our_users=our_users)
 
-
+# Create a Form Class
+class UserForm(FlaskForm):
+	name = StringField("Name", validators=[DataRequired()])
+	username = StringField("Username", validators=[DataRequired()])
+	email = StringField("Email", validators=[DataRequired()])
+	favorite_color = StringField("Favorite Color")
+	password_hash = PasswordField('Password', validators=[DataRequired(), EqualTo('password_hash2', message='Passwords Must Match!')])
+	password_hash2 = PasswordField('Confirm Password', validators=[DataRequired()])
+	submit = SubmitField("Submit")
 
 # Update Database Record
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
@@ -281,6 +301,51 @@ def update(id):
 				form=form,
 				name_to_update = name_to_update,
 				id = id)
+
+class PasswordForm(FlaskForm):
+	email = StringField("What's Your Email", validators=[DataRequired()])
+	password_hash = PasswordField("What's Your Password", validators=[DataRequired()])
+	submit = SubmitField("Submit")
+
+# Create a Form Class
+class NamerForm(FlaskForm):
+	name = StringField("What's Your Name", validators=[DataRequired()])
+	submit = SubmitField("Submit")
+
+	# BooleanField
+	# DateField
+	# DateTimeField
+	# DecimalField
+	# FileField
+	# HiddenField
+	# MultipleField
+	# FieldList
+	# FloatField
+	# FormField
+	# IntegerField
+	# PasswordField
+	# RadioField
+	# SelectField
+	# SelectMultipleField
+	# SubmitField
+	# StringField
+	# TextAreaField
+
+	## Validators
+	# DataRequired
+	# Email
+	# EqualTo
+	# InputRequired
+	# IPAddress
+	# Length
+	# MacAddress
+	# NumberRange
+	# Optional
+	# Regexp
+	# URL
+	# UUID
+	# AnyOf
+	# NoneOf
 
 
 

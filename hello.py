@@ -4,8 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash 
 from datetime import date
+<<<<<<< HEAD
+=======
+from webforms import LoginForm, PostForm, UserForm, PasswordForm, NamerForm
+>>>>>>> 9fa2f849234c055262f6031fc4e59ef721a5e256
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from webforms import LoginForm, PostForm, UserForm, PasswordForm, NamerForm
+
 
 # Create a Flask Instance
 app = Flask(__name__)
@@ -31,7 +36,11 @@ def load_user(user_id):
 	return Users.query.get(int(user_id))
 
 
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 9fa2f849234c055262f6031fc4e59ef721a5e256
 
 # Create Login Page
 @app.route('/login', methods=['GET', 'POST'])
@@ -219,6 +228,10 @@ def delete(id):
 		return render_template("add_user.html", 
 		form=form, name=name,our_users=our_users)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9fa2f849234c055262f6031fc4e59ef721a5e256
 
 # Update Database Record
 @app.route('/update/<int:id>', methods=['GET', 'POST'])

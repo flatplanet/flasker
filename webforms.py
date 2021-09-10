@@ -4,11 +4,6 @@ from wtforms.validators import DataRequired, EqualTo, Length
 from wtforms.widgets import TextArea
 
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 9fa2f849234c055262f6031fc4e59ef721a5e256
 # Create Login Form
 class LoginForm(FlaskForm):
 	username = StringField("Username", validators=[DataRequired()])
@@ -24,10 +19,6 @@ class PostForm(FlaskForm):
 	slug = StringField("Slug", validators=[DataRequired()])
 	submit = SubmitField("Submit")
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9fa2f849234c055262f6031fc4e59ef721a5e256
 # Create a Form Class
 class UserForm(FlaskForm):
 	name = StringField("Name", validators=[DataRequired()])
@@ -38,10 +29,6 @@ class UserForm(FlaskForm):
 	password_hash2 = PasswordField('Confirm Password', validators=[DataRequired()])
 	submit = SubmitField("Submit")
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 9fa2f849234c055262f6031fc4e59ef721a5e256
 class PasswordForm(FlaskForm):
 	email = StringField("What's Your Email", validators=[DataRequired()])
 	password_hash = PasswordField("What's Your Password", validators=[DataRequired()])
@@ -86,9 +73,3 @@ class NamerForm(FlaskForm):
 	# UUID
 	# AnyOf
 	# NoneOf
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 9fa2f849234c055262f6031fc4e59ef721a5e256

@@ -16,7 +16,7 @@
 	<small>By: {{ post.poster.name }}<br/>
 	{{ post.date_posted }}</small> <br/><br/>
 
-	{{ post.content }}
+	{{ post.content|safe }}
 	<br/><br/>
 	<a href="{{ url_for('post', id=post.id)}}" class="btn btn-outline-secondary btn-sm">View Post</a>
 	

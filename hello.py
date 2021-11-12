@@ -7,10 +7,13 @@ from datetime import date
 from webforms import LoginForm, PostForm, UserForm, PasswordForm, NamerForm, SearchForm
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from webforms import LoginForm, PostForm, UserForm, PasswordForm, NamerForm
+from flask_ckeditor import CKEditor
 
 
 # Create a Flask Instance
 app = Flask(__name__)
+# Add CKEditor
+ckeditor = CKEditor(app)
 # Add Database
 # Old SQLite DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'

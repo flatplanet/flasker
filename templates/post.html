@@ -16,7 +16,7 @@
 	<small>By: {{ post.poster.name }}<br/>
 	{{ post.date_posted }}</small> <br/><br/>
 
-	{{ post.content }}<br/><br/>
+	{{ post.content|safe }}<br/><br/>
 </div>
 
 {% if post.poster_id == current_user.id %}

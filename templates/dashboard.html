@@ -22,9 +22,14 @@
     {{ current_user.name }}
   </div>
   <div class="card-body">
-    <h5 class="card-title">Welcome To Your User Dashboard...</h5>
+   
     <p class="card-text">
-    	<strong>Name:</strong>
+
+<div class="container">
+	<div class="row">
+		<div class="col-8">
+
+    <strong>Name:</strong>
 	{{ current_user.name }}<br/>
 
 	<strong>Username:</strong>
@@ -39,8 +44,13 @@
 	<strong>Favorite Color:</strong>
 	{{ current_user.favorite_color }}<br/>
 
+	<strong>About Author:</strong>
+	{{ current_user.about_author }}<br/>
+
 	<strong>Date Joined:</strong>
 	{{ current_user.date_added }}<br/>
+
+
 	
 
     	
@@ -50,6 +60,15 @@
     <a href="{{ url_for('update', id=current_user.id)}}" class="btn btn-secondary btn-sm">Update Profile</a>
 
     <a href="{{ url_for('delete', id=current_user.id)}}" class="btn btn-danger btn-sm">Delete</a>
+    <br/><br/>
+
+    
+	</div>
+	<div class="col-4">
+		<img src="{{ url_for('static', filename='images/default_profile_pic.png')}}" width="200" align="right">
+	</div>
+	</div>
+	</div>
 
 
   </div>
@@ -86,12 +105,17 @@
 		{{ form.favorite_color.label(class="form-label") }}
 
 		{{ form.favorite_color(class="form-control", value=name_to_update.favorite_color) }}
+		<br/>
 
+		{{ form.about_author.label(class="form-label") }}
+
+		<textarea name="about_author" class="form-control">{{ name_to_update.about_author }}</textarea>
 
 
 		<br/>
 		
 		{{ form.submit(class="btn btn-secondary btn-sm") }}
+			
 
 		
 

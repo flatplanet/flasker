@@ -8,6 +8,9 @@ from webforms import LoginForm, PostForm, UserForm, PasswordForm, NamerForm, Sea
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from webforms import LoginForm, PostForm, UserForm, PasswordForm, NamerForm
 from flask_ckeditor import CKEditor
+from werkzeug.utils import secure_filename
+import uuid as uuid
+import os
 
 
 # Create a Flask Instance
@@ -23,6 +26,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 # Secret Key!
 app.config['SECRET_KEY'] = "my super secret key that no one is supposed to know"
 # Initialize The Database
+
+UPLOAD_FOLDER = 'static/images/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -111,8 +118,22 @@ def dashboard():
 		name_to_update.favorite_color = request.form['favorite_color']
 		name_to_update.username = request.form['username']
 		name_to_update.about_author = request.form['about_author']
+		name_to_update.profile_pic = request.files['profile_pic']
+
+
+		# Grab Image Name
+		pic_filename = secure_filename(name_to_update.profile_pic.filename)
+		# Set UUID
+		pic_name = str(uuid.uuid1()) + "_" + pic_filename
+		# Save That Image
+		saver = request.files['profile_pic']
+		
+
+		# Change it to a string to save to db
+		name_to_update.profile_pic = pic_name
 		try:
 			db.session.commit()
+			saver.save(os.path.join(app.config['UPLOAD_FOLDER']), pic_name)
 			flash("User Updated Successfully!")
 			return render_template("dashboard.html", 
 				form=form,
@@ -443,6 +464,8 @@ class Users(db.Model, UserMixin):
 	favorite_color = db.Column(db.String(120))
 	about_author = db.Column(db.Text(500), nullable=True)
 	date_added = db.Column(db.DateTime, default=datetime.utcnow)
+	profile_pic = db.Column(db.String(), nullable=True)
+
 	# Do some password stuff!
 	password_hash = db.Column(db.String(128))
 	# User Can Have Many Posts 

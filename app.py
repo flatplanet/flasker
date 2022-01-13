@@ -19,7 +19,8 @@ app = Flask(__name__)
 ckeditor = CKEditor(app)
 # Add Database
 # Old SQLite DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://fvmdxyjigwbmiu:d31d36c7613e08f7ad37a6e40007189d7f2f44fbc99234b339994780a122d870@ec2-3-214-190-189.compute-1.amazonaws.com:5432/d17b5scj97ckqe'
 # New MySQL DB
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://username:password@localhost/db_name'
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password123@localhost/our_users'
@@ -462,7 +463,7 @@ class Users(db.Model, UserMixin):
 	name = db.Column(db.String(200), nullable=False)
 	email = db.Column(db.String(120), nullable=False, unique=True)
 	favorite_color = db.Column(db.String(120))
-	about_author = db.Column(db.Text(500), nullable=True)
+	about_author = db.Column(db.Text(), nullable=True)
 	date_added = db.Column(db.DateTime, default=datetime.utcnow)
 	profile_pic = db.Column(db.String(), nullable=True)
 

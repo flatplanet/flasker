@@ -134,7 +134,7 @@ def dashboard():
 		name_to_update.profile_pic = pic_name
 		try:
 			db.session.commit()
-			saver.save(os.path.join(app.config['UPLOAD_FOLDER']), pic_name)
+			saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
 			flash("User Updated Successfully!")
 			return render_template("dashboard.html", 
 				form=form,
@@ -276,8 +276,8 @@ def get_current_date():
 @app.route('/delete/<int:id>')
 @login_required
 def delete(id):
+	# Check logged in id vs. id to delete
 	if id == current_user.id:
-
 		user_to_delete = Users.query.get_or_404(id)
 		name = None
 		form = UserForm()

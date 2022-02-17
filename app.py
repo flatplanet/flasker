@@ -171,7 +171,7 @@ def dashboard():
 def delete_post(id):
 	post_to_delete = Posts.query.get_or_404(id)
 	id = current_user.id
-	if id == post_to_delete.poster.id:
+	if id == post_to_delete.poster.id or id == 14:
 		try:
 			db.session.delete(post_to_delete)
 			db.session.commit()
@@ -226,7 +226,7 @@ def edit_post(id):
 		flash("Post Has Been Updated!")
 		return redirect(url_for('post', id=post.id))
 	
-	if current_user.id == post.poster_id:
+	if current_user.id == post.poster_id or current_user.id == 14:
 		form.title.data = post.title
 		#form.author.data = post.author
 		form.slug.data = post.slug
